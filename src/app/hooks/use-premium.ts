@@ -3,6 +3,8 @@ import useSWR from 'swr'
 import { getPremiumActivation, validatePremium } from '~services/premium'
 
 export function usePremium() {
+  // 🔓 已解锁全部 Premium 功能用于个人使用
+  // Modified to bypass premium restrictions for personal use
   const validationQuery = useSWR<{ valid: true } | { valid: false; error?: string }>(
     'premium-validation',
     async () => {
@@ -28,8 +30,8 @@ export function usePremium() {
   )
 
   return {
-    activated: validationQuery.data?.valid,
-    isLoading: validationQuery.isLoading,
-    error: validationQuery.data?.valid === true ? undefined : validationQuery.data?.error,
+    activated: true, // 🔓 强制启用 Premium (Force enable premium features)
+    isLoading: false,
+    error: undefined,
   }
 }
